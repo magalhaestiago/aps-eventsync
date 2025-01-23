@@ -1,0 +1,112 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  cpf       String   @unique
+  password  String
+  user_type Role     @default(ALUNO)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  // um professor pode ter vários eventos
+  eventos                event[]                  @relation("ProfessorEventos")
+  atividade_complementar atividade_complementar[]
+  event_aluno            event_aluno[]
+}
+
+model event {
+  id            String       @id @default(uuid())
+  titulo        String
+  descricao     String
+  datainicio    DateTime
+  datafim       DateTime
+  instituicao   String
+  carga_horaria Int
+  limite_vagas  Int          @default(0)
+  status        event_status @default(EMANDAMENTO)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @default(now()) @updatedAt
+
+  //referenciando o professor criador do evento
+  professorId            String?
+  professor              User?                    @relation("ProfessorEventos", fields: [professorId], references: [id])
+  event_aluno            event_aluno[]
+  atividade_complementar atividade_complementar[]
+}
+
+model event_aluno {
+  id                  String                    @id @default(uuid())
+  subscription_status event_subscription_status @default(SUBSCRIBED)
+  createdAt           DateTime                  @default(now())
+  updatedAt           DateTime                  @default(now()) @updatedAt
+
+  userId  String
+  User    User   @relation(fields: [userId], references: [id])
+  eventId String
+  event   event  @relation(fields: [eventId], references: [id])
+}
+
+model atividade_complementar {
+  id                 String             @id @default(uuid())
+  participation_type Participation_type @default(PARTICIPANTE)
+  horas_aprovadas    Int                @default(0)
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @default(now()) @updatedAt
+  eventId            String?
+  event              event?             @relation(fields: [eventId], references: [id])
+  userId             String?
+  User               User?              @relation(fields: [userId], references: [id])
+}
+
+enum event_subscription_status {
+  SUBSCRIBED
+  PRESENT
+  NOT_PRESENT
+  FINISHED
+}
+
+enum Activity_Nature {
+  ENSINO
+  PESQUISA
+  GERAL
+  EXTENSAO
+  ESPORTIVA
+  CULTURAL
+}
+
+enum Participation_type {
+  ALUNO
+  AUTOR
+  BOLSISTA
+  COLABORADOR
+  ESTAGIARIO
+  MEMBRO
+  MONITOR
+  ORGANIZADOR
+  OUVINTE
+  PARTICIPANTE
+  OUTRO
+}
+
+enum event_status {
+  EMANDAMENTO
+  CONCLUIDO
+}
+
+enum Role {
+  ALUNO
+  PROFESSOR
+  COORDENADOR
+}

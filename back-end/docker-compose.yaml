@@ -1,0 +1,9 @@
+services:
+    postgres-compose:
+        image: postgres
+        environment:
+            - POSTGRES_PASSWORD=odeiotalf123
+        ports:
+            - "5432:5432"
+        volumes:
+            - ~/EventSyncDatabase:/var/lib/postgresql/data
