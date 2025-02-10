@@ -6,6 +6,7 @@ import {
     UpdateEventStatusRequest,
     InscricaoEventoRequest,
 } from "@models/event/event";
+import { isValid } from "zod";
 
 const prisma = new PrismaClient();
 
@@ -101,7 +102,11 @@ class EventService {
 
     //listar eventos
     async listarEventos(req: Request, res: Response) {
-        const events = await prisma.event.findMany();
+        const events = await prisma.event.findMany({
+            where:{
+                isValid:true
+            }
+        });
 
         return events;
     }

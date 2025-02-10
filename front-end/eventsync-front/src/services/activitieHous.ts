@@ -26,6 +26,7 @@ export async function getActivities() {
     return response.data.activities;
 }
 
+
 export async function getActivitie(id: string) {
     const response = await api.get<Activitie>(`/activities/${id}`);
     return response.data.activitie;

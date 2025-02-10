@@ -7,6 +7,7 @@ import { userRoutes } from "api/routes/user.routes";
 import { eventRoutes } from "api/routes/events.routes";
 import verifyJWT from "middlewares/ensureAuthenticated";
 import { activitiesRoutes } from "api/routes/activities.routes";
+import { certificateRoutes } from "api/routes/certificates.routes";
 
 const PORT = 8080;
 
@@ -24,9 +25,11 @@ server.use(authRoutes);
 
 // private routes
 server.use(verifyJWT);
+
 server.use(userRoutes);
 server.use(eventRoutes);
 server.use(activitiesRoutes);
+server.use(certificateRoutes);
 
 server.use(errorHandlingMiddleware);
 
