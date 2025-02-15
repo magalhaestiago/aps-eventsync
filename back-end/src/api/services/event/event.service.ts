@@ -1,4 +1,4 @@
-import { event_status, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { AppError } from "errors/AppError";
 import { Request, Response } from "express";
 import {
@@ -80,7 +80,7 @@ class EventService {
                 instituicao,
                 carga_horaria,
                 limite_vagas,
-                status: status as event_status,
+                status,
             },
         });
 

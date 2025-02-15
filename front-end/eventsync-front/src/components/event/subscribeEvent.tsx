@@ -60,7 +60,9 @@ export default function SubscribeEvent({ id, title, description, date }: Subscri
                 <DialogContent className="max-w-[550px]">
                     <DialogHeader>
                         <DialogTitle
-                            className="text-3xl flex items-center justify-center">
+                            onClick={()=>{
+                                window.location.reload()
+                            }} className="text-3xl flex items-center justify-center">
                             Inscrito com sucesso
                         </DialogTitle>
                     </DialogHeader>

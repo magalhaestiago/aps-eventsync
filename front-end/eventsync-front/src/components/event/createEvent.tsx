@@ -45,7 +45,8 @@ export default function CreateEventButton({ message }: ButtonProps) {
         if (!response) {
             console.log("Deu bad!");
         }
-        router.push("/events/" + user?.role.toLowerCase());
+        //router.push("/events/" + user?.role.toLowerCase());
+        window.location.reload()
     };
 
     return (
@@ -66,11 +67,12 @@ export default function CreateEventButton({ message }: ButtonProps) {
                         placeholder="Escreva o título do evento"
                         className="text-[16px] p-5 border-2 rounded-[40px] ml-6 mr-6 mb-4 border-gray-300 h-12 w-[1000px]"
                         value={title}
+                        maxLength={50}
                         onChange={(e) => setTitle(e.target.value)}
                     />
                     <h2 className="text-xl font-bold ml-6 mr-6">Descrição (opcional)</h2>
                     <textarea
-                        placeholder="Apresente mais detalhes sobre o teste"
+                        placeholder="Apresente mais detalhes sobre o evento"
                         className="text-[16px] p-5 border-2 rounded-[40px] ml-6 mr-6 mb-4 border-gray-300 h-40 align-text-top resize-none w-[1000px]"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
@@ -79,12 +81,8 @@ export default function CreateEventButton({ message }: ButtonProps) {
                     <div className="flex h-auto ml-6 mr-6 mb-4">
                         <div className="w-1/3 mr-6">
                             <h2 className="text-xl font-bold">Instituição da atividade</h2>
-                            <input
-                                placeholder="Escreva o nome da instituição"
-                                className="text-[16px] p-5 border-2 rounded-[40px] border-gray-300 h-12 w-full"
-                                value={institution}
-                                onChange={(e) => setInstitution(e.target.value)}
-                            />
+                            <p className="bg-gray-200 text-[16px] p-5 border-2 rounded-[40px] border-gray-300 h-12 w-full py-2.5 text-gray-500"> UECE </p>
+                            
                         </div>
                         <div className="w-1/3 mr-6">
                             <h2 className="text-xl font-bold">Natureza da AC</h2>
@@ -121,7 +119,7 @@ export default function CreateEventButton({ message }: ButtonProps) {
                             <h2 className="text-xl font-bold">Data de início</h2>
                             <input
                                 type="date"
-                                className="text-[16px] p-5 border-2 rounded-[40px] border-gray-300 h-12 w-full"
+                                className="text-[16px] p-5 border-2 rounded-[40px] border-gray-300 h-12 w-full py-2.5"
                                 value={startDate}
                                 onChange={(e) => setStartDate(e.target.value)}
                             />
@@ -130,7 +128,7 @@ export default function CreateEventButton({ message }: ButtonProps) {
                             <h2 className="text-xl font-bold">Data de fim</h2>
                             <input
                                 type="date"
-                                className="text-[16px] p-5 border-2 rounded-[40px] border-gray-300 h-12 w-full"
+                                className="text-[16px] p-5 border-2 rounded-[40px] border-gray-300 h-12 w-full py-2.5"
                                 value={endDate}
                                 onChange={(e) => setEndDate(e.target.value)}
                             />
@@ -150,6 +148,7 @@ export default function CreateEventButton({ message }: ButtonProps) {
                             <button
                                 type="submit"
                                 className="text-white bg-eventSyncSecondary py-3 rounded-[40px] w-1/6"
+                                
                             >
                                 Confirmar
                             </button>

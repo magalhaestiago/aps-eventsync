@@ -148,7 +148,7 @@ export default function CreateActivitiesButton({ message }: ButtonProps) {
                             </button>
                         </DialogClose>
                         <DialogClose asChild>
-                            <button type="submit" className="text-white bg-eventSyncSecondary py-3 rounded-[40px] w-1/6">
+                            <button type="submit" className="text-white bg-eventSyncSecondary py-3 rounded-[40px] w-1/6" >
                                 Confirmar
                             </button>
                         </DialogClose>

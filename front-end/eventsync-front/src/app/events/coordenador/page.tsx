@@ -10,6 +10,7 @@ import { EventTypeFromServer } from "@/models/event";
 import { getEvents } from "@/services/event";
 import BaseSection from "@/components/baseSection";
 import EventsTable from "@/components/event/EventsTable";
+import EventsTableCoordenador from "@/components/event/EventsTableCoordenador";
 
 
 export default function EventCoordenador() {
@@ -29,16 +30,10 @@ export default function EventCoordenador() {
         <BaseDashBoardPage>
             <SideBar user={user} currentPage="Eventos" links={CoordenadorLinks} />
             <BaseSection>
-                <Header
-                    breadCrumb="Eventos"
-                    user={user}
-                    description="Gerencie seus eventos"
-                    buttonMessage="Criar Evento"
-                    isEvent={true}
-                />
+            <h6 className="text-fontGray mb-5">Eventos</h6>
 
                 <div>
-                    <EventsTable events={events} />
+                    <EventsTableCoordenador events={events} />
                 </div>
             </BaseSection>
         </BaseDashBoardPage>

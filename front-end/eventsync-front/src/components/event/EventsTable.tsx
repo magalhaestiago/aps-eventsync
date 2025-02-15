@@ -1,11 +1,13 @@
 import { EventTypeFromServer } from "@/models/event";
 import TableCustom from "../container/tableCustom";
-import { formatDate } from "date-fns/format";
-import AdminEvent from "./AdmimEvent";
+import { format } from "date-fns";
+import AdminEvent from "./AdminEvent";
+import ViewEvent from "./viewEvent";
 
 type EventsTableProps = {
     events: EventTypeFromServer[];
 };
+
 export default function EventsTable({ events }: EventsTableProps) {
     function createEventRow(event: EventTypeFromServer) {
         let statusStyle: string = "";
@@ -13,7 +15,7 @@ export default function EventsTable({ events }: EventsTableProps) {
             case "concluido":
                 statusStyle = "text-green-500";
                 break;
-            case "emandamento":
+            case "em andamento":
                 statusStyle = "text-yellow-500";
                 break;
             default:
@@ -21,24 +23,45 @@ export default function EventsTable({ events }: EventsTableProps) {
         }
 
         return (
-            <div className="text-black w-full h-[6rem] border-2 rounded-3xl shadow mt-2 mb-2 flex items-center justify-between">
+            <div className="text-black w-full h-[6rem] border-2 rounded-3xl shadow mt-2 mb-2 flex items-center justify-between p-4">
                 <div className="h-full w-[200px] flex items-center">
-                    <div className="p-5 flex flex-col items-start justify-center">
-                        <p className="text-2xl font-bold">{event.titulo}</p>
+                    <div className="flex flex-col items-start justify-center">
+                        <p 
+                            className={`font-bold ${event.titulo.length > 20 ? "text-xl" : "text-2xl"} truncate max-w-[180px]`}
+                            title={event.titulo} // Exibe o título completo ao passar o mouse
+                        >
+                            {event.titulo}
+                        </p>
                         <p className="text-fontGray">
-                            {formatDate(event.datainicio, "dd/MM - HH:mm")}
+                            {format(new Date(event.datainicio), "dd/MM - HH:mm")}
                         </p>
                     </div>
                 </div>
                 <p className={`font-bold ${statusStyle}`}>{event.status}</p>
-                <AdminEvent event={event} />
+        
+                {/* Ajuste na posição da imagem */}
+                <div className="flex items-center gap-4"> 
+                    <img 
+                        
+                        src="/description-gray.svg" 
+                        alt="Descrição" 
+                        className="w-6 h-6" // Ajusta tamanho
+                    />
+                    <AdminEvent event={event} />
+                </div>
             </div>
         );
+        
+
+        
     }
 
     return (
         <TableCustom title={"Seus Eventos"}>
-            <div>{events.map(createEventRow)}</div>
+            {/* Adicionando rolagem para a lista de eventos */}
+            <div className="max-h-[400px] overflow-y-auto px-2">
+                {events.map(createEventRow)}
+            </div>
         </TableCustom>
     );
 }
