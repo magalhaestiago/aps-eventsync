@@ -26,7 +26,7 @@ export default function EventsTable({ events }: EventsTableProps) {
             <div className="text-black w-full h-[6rem] border-2 rounded-3xl shadow mt-2 mb-2 flex items-center justify-between p-4">
                 <div className="h-full w-[200px] flex items-center">
                     <div className="flex flex-col items-start justify-center">
-                        <p className="text-2xl font-bold">{event.titulo}</p>
+                        <p className="text-2xl font-bold truncate max-w-[200px]">{event.titulo}</p>
                         <p className="text-fontGray">
                             {format(new Date(event.datainicio), "dd/MM - HH:mm")}
                         </p>

@@ -36,7 +36,13 @@ export default function SubscribeEvent({ id, title, description, date }: Subscri
                 </DialogTrigger>
                 <DialogContent className="max-w-[550px]">
                     <DialogHeader>
-                        <DialogTitle className="text-3xl">{title}</DialogTitle>
+                        <DialogTitle
+                    className={`font-bold break-all ${
+                            title.length > 30 ? "text-2xl" : "text-3xl"
+                        } max-w-full text-start`}
+                        >
+                        {title}
+                    </DialogTitle>
                         <p className="text-fontGray text-sm">{formatDate(date, "dd/MM - HH:mm")}</p>
                         <DialogDescription>
                             {description}

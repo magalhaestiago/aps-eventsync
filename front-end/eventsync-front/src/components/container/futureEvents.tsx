@@ -26,7 +26,7 @@ export default function FutureEvents({ events }: FutureEventsProps) {
                 <div className="h-full w-25 flex">
                     <div className={smt}></div>
                     <div className="p-2 flex flex-col items-start justify-center">
-                        <p className="text-2xl font-bold">{event.titulo}</p>
+                        <p className="text-2xl font-bold truncate max-w-[200px]">{event.titulo}</p>
                         <p className="text-fontGray">
                             {formatDate(event.datainicio, "dd/MM - HH:mm")}
                         </p>

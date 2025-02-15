@@ -52,13 +52,12 @@ export default function AdminEvent({ event }: AdminEventProps) {
             <Dialog>
             
                 <DialogTrigger>
-                    
                     <SecondaryButton message="Gerenciar" />
                 </DialogTrigger>
                 <DialogContent className="max-w-[550px]">
     <DialogHeader className="flex justify-between flex-row">
         <div>
-            <DialogTitle className="text-3xl">{event.titulo}</DialogTitle>
+            <DialogTitle className="text-3xl break-all">{event.titulo}</DialogTitle>
             <p className="text-fontGray text-sm">
                 {formatDate(event.datainicio, "dd/MM - HH:mm")}
             </p>

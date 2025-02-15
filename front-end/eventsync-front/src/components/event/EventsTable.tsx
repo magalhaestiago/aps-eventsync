@@ -3,6 +3,7 @@ import TableCustom from "../container/tableCustom";
 import { format } from "date-fns";
 import AdminEvent from "./AdminEvent";
 import ViewEvent from "./viewEvent";
+import ViewEventProfessor from "./viewEventProfessor";
 
 type EventsTableProps = {
     events: EventTypeFromServer[];
@@ -41,12 +42,8 @@ export default function EventsTable({ events }: EventsTableProps) {
         
                 {/* Ajuste na posição da imagem */}
                 <div className="flex items-center gap-4"> 
-                    <img 
-                        
-                        src="/description-gray.svg" 
-                        alt="Descrição" 
-                        className="w-6 h-6" // Ajusta tamanho
-                    />
+                    <ViewEventProfessor event={event}></ViewEventProfessor>
+                    
                     <AdminEvent event={event} />
                 </div>
             </div>
