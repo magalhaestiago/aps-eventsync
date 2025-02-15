@@ -1,3 +1,4 @@
+## To fix
 [X] - Em andamento ta colado.
 [X] - dar um auto refresh após excluir.
 [] -um botão de excluir deu problema, tem algo estranho na exclusão.
