@@ -2,6 +2,8 @@ import { useAuth } from "@/contexts/authContext"
 import { links } from "@/models/links"
 import { UserType } from "@/models/user"
 import Link from "next/link"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
+import QRCode from 'react-qr-code'
 
 type SideBarProps = {
     currentPage: string
@@ -40,7 +42,24 @@ export function SideBar({ currentPage, links, user }: SideBarProps) {
             <div></div>
             <div></div>
             <div className="flex flex-col items-center justify-center">
-                <p className="text-[1.5rem] font-bold ">{user?.name}</p>
+                <Dialog>
+                    <DialogTrigger asChild>
+                        <button>{user?.name}</button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-[1100px]">
+                        <DialogHeader>
+                            <DialogTitle>QR Code Único</DialogTitle>
+                            <DialogDescription>Este é seu QR code de entrada.</DialogDescription>
+                        </DialogHeader>
+
+                        <div className="flex items-center justify-center" style={{ background: 'white', padding: '16px' }}>
+                            <QRCode 
+                            value={user?.cpf || '000.000.000-00'}
+                            />
+                        </div>
+
+                    </DialogContent>
+                </Dialog>
                 <button className=" text-white texte-sm w-[3rem] h-[1rem]" onClick={logOut}>
                     Sair
                 </button>

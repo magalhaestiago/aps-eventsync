@@ -13,7 +13,7 @@ export function MiniEventCards({ title, date }: CardProps) {
     const eventHours = formatDate(date!, "HH:mm")
 
     return (
-        <section className="p-6 m-1 w-[10rem] h-[10rem] rounded-3xl border-2 shadow-xl flex flex-col items-start justify-between">
+        <section className="p-6 m-1 w-[10rem] h-[10rem] rounded-3xl border-2 shadow-xl flex flex-col items-start justify-between truncate max-[x]:">
             <div>
                 <p className="text-black text-xl font-bold">{eventDate}</p>
                 <p className="text-sm text-fontGray">{eventHours}</p>

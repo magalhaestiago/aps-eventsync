@@ -34,10 +34,7 @@ export default function FutureEvents({ events }: FutureEventsProps) {
                 </div>
                 <div>
                     <SubscribeEvent
-                        id={event.id}
-                        title={event.titulo}
-                        description={event.descricao}
-                        date={event.datainicio}
+                        event={event}
                     />
                 </div>
             </div>
@@ -50,7 +47,7 @@ export default function FutureEvents({ events }: FutureEventsProps) {
                 events.map((e, i) => createEventCard(e, backgroundColors[i]))
             ) : (
                 <div className="w-full h-full flex flex-col items-center text-2xl pt-[150px]">
-                    Nenhum eventos novo cadastrado
+                    Nenhum evento novo cadastrado
                 </div>
             )}
         </TableCustom>

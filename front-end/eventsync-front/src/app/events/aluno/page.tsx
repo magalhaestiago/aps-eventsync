@@ -8,7 +8,7 @@ import Header from "@/components/header";
 import { SideBar } from "@/components/sideBar";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { useAuth } from "@/contexts/authContext";
-import { EventTypeFromServer, SubscribedEvents } from "@/models/event";
+import { EventTypeFromServer, Subscription } from "@/models/event";
 import { AlunoLinks } from "@/models/links";
 import { getEvents, subscribedEvents } from "@/services/event";
 import { useEffect, useState } from "react";
@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 export default function EventStudent() {
     const { user } = useAuth();
     const [events, setEvents] = useState<EventTypeFromServer[]>([]);
-    const [allSubscribedEvents, setSubscribedEvents] = useState<SubscribedEvents[]>([]);
+    const [allSubscribedEvents, setSubscribedEvents] = useState<Subscription[]>([]);
 
     useEffect(() => {
         const getAllEvents = async () => {
@@ -35,16 +35,18 @@ export default function EventStudent() {
     }, []);
 
     console.log(events, "events");
+    
 
     const notSubscribedEvents = events.filter((event) => {
-        return !allSubscribedEvents.some((sub) => sub.event.id === event.id);
+        return event.status !== "CONCLUIDO" && !allSubscribedEvents.some((sub) => sub.event.id === event.id);
     });
+    
 
     const notPassedEvents = allSubscribedEvents.filter((event) => {
         return event.event.status !== "CONCLUIDO";
     });
 
-    function createSubscribedEventsList(event: SubscribedEvents) {
+    function createSubscribedEventsList(event: Subscription) {
         return (
             <CarouselItem className="basis-2/7">
                 <MiniEventCards title={event.event.titulo} date={event.event.datainicio} />
@@ -56,7 +58,7 @@ export default function EventStudent() {
         <BaseDashBoardPage>
             <SideBar user={user} currentPage="Eventos" links={AlunoLinks} />
             <BaseSection>
-                <div className="w-full flex ">
+                <div className="w-full flex">
                     <Header
                         breadCrumb={"Eventos"}
                         user={user}

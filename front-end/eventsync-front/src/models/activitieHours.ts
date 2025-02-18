@@ -1,4 +1,5 @@
 import { EventTypeFromServer } from "./event"
+import { Certificate} from './certificate'
 
 export type ActivitieHoursType = {
     id: string,
@@ -7,6 +8,8 @@ export type ActivitieHoursType = {
     createdAt: string,
     updatedAt: string,
     event: EventTypeFromServer,
+    Certificate?: Certificate,
     userId: string, 
     eventId: string, 
+    isReviewed: boolean
 }

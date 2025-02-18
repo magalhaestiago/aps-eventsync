@@ -23,20 +23,22 @@ model User {
 }
 
 model Certificate {
-  id          String   @id @default(uuid())
-  titulo      String
-  descricao   String
-  horas       Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now()) @updatedAt
-  urlArquivo  String
-  userId      String?
-  isValid     Boolean  @default(false)
-  datafim     DateTime
-  datainicio  DateTime
-  instituicao String
-  isReviewed  Boolean  @default(false)
-  User        User?    @relation(fields: [userId], references: [id])
+  id                     String                   @id @default(uuid())
+  titulo                 String
+  descricao              String
+  horas                  Int
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @default(now()) @updatedAt
+  urlArquivo             String
+  dadosArquivo           String?
+  userId                 String?
+  isValid                Boolean                  @default(false)
+  datafim                DateTime
+  datainicio             DateTime
+  instituicao            String
+  isReviewed             Boolean                  @default(false)
+  User                   User?                    @relation(fields: [userId], references: [id])
+  atividade_complementar atividade_complementar[]
 }
 
 model event {
@@ -79,6 +81,9 @@ model atividade_complementar {
   userId             String?
   event              event?             @relation(fields: [eventId], references: [id])
   User               User?              @relation(fields: [userId], references: [id])
+
+  certificateId String?
+  Certificate   Certificate? @relation(onDelete: Cascade, fields: [certificateId], references: [id])
 }
 
 enum event_subscription_status {

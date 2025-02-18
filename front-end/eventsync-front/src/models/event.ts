@@ -1,3 +1,5 @@
+import { UserType } from "./user";
+
 export type Natureza = "ENSINO" | "PESQUISA" | "GERAL" | "EXTENSAO" | "ESPORTIVA" | "CULTURAL";
 
 export type EventType = {
@@ -23,8 +25,10 @@ export type EventTypeFromServer = {
     status: string;
     professorId: string;
     natureza: Natureza;
+    eventAlunos: Subscription[];
+    professor: UserType;
 };
-export type SubscribedEvents = {
+export type Subscription = {
     id: string;
     subscription_status: string;
     createdAt: string;
@@ -32,4 +36,9 @@ export type SubscribedEvents = {
     userId: string;
     eventId: string;
     event: EventTypeFromServer;
+    User: UserType;
 };
+
+
+
+

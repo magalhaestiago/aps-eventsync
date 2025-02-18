@@ -6,8 +6,10 @@ const prisma = new PrismaClient();
 class CertificateService {
     async listarCertificados() {
         const certificates = await prisma.certificate.findMany({
-            where:{
+            where: {
                 isReviewed: false
+            }, include: {
+                User:true
             }
         });
         return certificates;
@@ -19,11 +21,70 @@ class CertificateService {
         const certificate = await prisma.certificate.findUnique({
             where: {
                 id,
-            },
+            }, include: {
+                User:true,
+                atividade_complementar:true,
+            }
         });
 
         return certificate;
     }
+
+    async createCertificado(req: Request, res: Response) {
+        const { id } = req.user;
+        const { titulo, descricao, horas, urlArquivo, instituicao, dataFim, dataInicio } = req.body;
+
+        const activity = await prisma.atividade_complementar.create({
+            data: {
+
+            }
+        })
+
+        const certificado = await prisma.certificate.create({
+            data: {
+                titulo,
+                userId: id,
+                descricao,
+                horas,
+                instituicao,
+                urlArquivo,
+                datafim: dataFim,
+                datainicio: dataInicio,
+                isReviewed: false,
+                isValid: false
+
+            },
+        });
+
+        const event = await prisma.event.create({
+            data: {
+                titulo: certificado.titulo,
+                descricao: certificado.descricao,
+                datainicio: certificado.datainicio,
+                carga_horaria: certificado.horas,
+                datafim: certificado.datafim,
+                instituicao: certificado.instituicao,
+                limite_vagas: 0,
+                status: "CONCLUIDO",
+                isValid: false,
+            },
+        })
+
+        await prisma.atividade_complementar.create({
+            data: {
+                eventId: event.id,
+                userId: certificado.userId,
+                horas_aprovadas: event.carga_horaria,
+                participation_type: "ALUNO",
+                certificateId: certificado.id
+            }
+        })
+
+        return certificado;
+    }
+
+
+    /*
 
     async createCertificado(req: Request, res: Response) {
         const { id } = req.user;
@@ -44,6 +105,7 @@ class CertificateService {
 
         return certificado;
     }
+        */
 
     async validateCertificate(req: Request, res: Response) {
 
@@ -59,32 +121,6 @@ class CertificateService {
             }
 
         })
-
-        if (isValid) {
-            const event = await prisma.event.create({
-                data: {
-                    titulo: certificado.titulo,
-                    descricao: certificado.descricao,
-                    datainicio: certificado.datainicio,
-                    carga_horaria: certificado.horas,
-                    datafim: certificado.datafim,
-                    instituicao: certificado.instituicao,
-                    limite_vagas: 0,
-                    status: "CONCLUIDO",
-                    isValid: false,
-                },
-            })
-            await prisma.atividade_complementar.create({
-                data: {
-                    eventId: event.id,
-                    userId: certificado.userId,
-                    horas_aprovadas: event.carga_horaria,
-                    participation_type: "ALUNO",
-                    
-
-                }
-            })
-        }
 
 
         return certificado;

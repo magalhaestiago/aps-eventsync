@@ -11,6 +11,8 @@ import { getEvents } from "@/services/event";
 import BaseSection from "@/components/baseSection";
 import EventsTable from "@/components/event/EventsTable";
 
+
+
 export default function EventProfessor() {
     const { user } = useAuth();
     const [events, setEvents] = useState<EventTypeFromServer[]>([]);
@@ -34,7 +36,9 @@ export default function EventProfessor() {
                     buttonMessage="Criar Evento"
                     isEvent={true}
                 />
-
+                <div>
+                
+                </div>
                 <div>
                     <EventsTable events={events} />
                 </div>

@@ -30,7 +30,19 @@ class CertificateController {
             message: "Certificado criado com sucesso",
             certificado,
         });
+
     }
+    /*
+    async criarCertificado(req: Request, res: Response) {
+        const certificado = await certificatesService.createCertificado(req, res);
+
+        return res.status(201).send({
+            message: "Certificado criado com sucesso",
+            certificado,
+        });
+    }
+        */
+        
 
     async validateCertificate(req: Request, res: Response) {
         const certificado = await certificatesService.validateCertificate(req, res);

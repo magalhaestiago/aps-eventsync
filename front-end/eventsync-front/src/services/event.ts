@@ -1,4 +1,4 @@
-import { EventType, EventTypeFromServer, SubscribedEvents } from "@/models/event";
+import { EventType, EventTypeFromServer, Subscription } from "@/models/event";
 import { api } from "./api";
 
 type EventResponse = {
@@ -9,8 +9,8 @@ type EventsReponse = {
     events: EventTypeFromServer[];
 };
 
-type AllSubsCribedEvents = {
-    inscricoes: SubscribedEvents[];
+export type AllSubscribedEvents = {
+    inscricoes: Subscription[];
 };
 
 export async function getEvents() {
@@ -39,7 +39,7 @@ export async function concludeEvent(event: EventTypeFromServer) {
 }
 
 export async function subscribedEvents() {
-    const response = await api.get<AllSubsCribedEvents>("/subscriptions");
+    const response = await api.get<AllSubscribedEvents>("/subscriptions");
 
     return response.data.inscricoes;
 }
@@ -57,4 +57,9 @@ export async function checkinEvent(eventId: string, cpf: string, checked: boolea
         checked_in: checked,
     });
     return response;
+}
+
+export async function getSubscriptionsByEventId(eventId: string) {
+    const response = await api.get<AllSubscribedEvents>(`/subscriptions/${eventId}`);
+    return response.data.inscricoes;
 }

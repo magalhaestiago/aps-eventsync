@@ -8,8 +8,8 @@ export const AlunoLinks = [
     { name: "Atividades", path: "/activities/aluno" },
 ];
 export const professorLinks = [
-    { name: "Home", path: "/dashboard/professor" },
-    { name: "Eventos", path: "/events/professor" },
+    { name: "Eventos", path: "/dashboard/professor" },
+    // { name: "Eventos", path: "/events/professor" },
 ];
 export const CoordenadorLinks = [
     { name: "Home", path: "/dashboard/coordenador" },

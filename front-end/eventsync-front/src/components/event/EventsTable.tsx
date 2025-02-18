@@ -5,6 +5,7 @@ import AdminEvent from "./AdminEvent";
 import ViewEvent from "./viewEvent";
 import ViewEventProfessor from "./viewEventProfessor";
 
+
 type EventsTableProps = {
     events: EventTypeFromServer[];
 };
@@ -36,18 +37,23 @@ export default function EventsTable({ events }: EventsTableProps) {
                         <p className="text-fontGray">
                             {format(new Date(event.datainicio), "dd/MM - HH:mm")}
                         </p>
+                        
                     </div>
+                   
                 </div>
                 <p className={`font-bold ${statusStyle}`}>{event.status}</p>
         
                 {/* Ajuste na posição da imagem */}
                 <div className="flex items-center gap-4"> 
-                    <ViewEventProfessor event={event}></ViewEventProfessor>
+                    
                     
                     <AdminEvent event={event} />
                 </div>
+                
             </div>
         );
+
+        
         
 
         

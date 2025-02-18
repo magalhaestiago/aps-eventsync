@@ -12,23 +12,7 @@ type ViewEventProps = {
     event: EventTypeFromServer
 }
 export default function ViewEvent({ event }: ViewEventProps) {
-    const [professorName, setProfessorName] = useState<string | null>(null);
-
-    async function fetchProfessorName(professorId: string): Promise<string> {
-        const response = await fetch(`/api/user/${professorId}`);
-        const data = await response.json();
-        return data.nome;
-    }
-
-    useEffect(() => {
-        // Buscar o nome do professor assim que o evento for carregado
-        async function loadProfessor() {
-            const name = await fetchProfessorName(event.professorId);
-            setProfessorName(name);
-        }
-
-        loadProfessor();
-    }, [event.professorId]); // Vai rodar sempre que o professorId mudar
+     // Vai rodar sempre que o professorId mudar
     
 
     return (
@@ -50,7 +34,7 @@ export default function ViewEvent({ event }: ViewEventProps) {
             </DialogDescription>
 
             <DialogFooter> 
-                <p className="text-fontGray text-sm">Criado por {professorName} {event.professorId}</p>
+                <p className="text-fontGray text-sm">Criado por {event.professor.name}</p>
                 
             </DialogFooter>
         </div>

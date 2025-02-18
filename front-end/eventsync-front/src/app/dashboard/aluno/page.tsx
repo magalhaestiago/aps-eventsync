@@ -29,7 +29,7 @@ export default function AlunoHome() {
     function createMiniEventCard(eventType: EventType) {
         return (
             <CarouselItem className="basis-1/3">
-                <MiniEventCards title={eventType.titulo} date={eventType.datainicio} />
+                <MiniEventCards title={eventType.titulo} date={eventType.datainicio}/>
             </CarouselItem>
         );
     }
@@ -49,27 +49,14 @@ export default function AlunoHome() {
                         <div className="">
                             <ActivitieHoursProgress />
                         </div>
-                        <div className=" w-[35rem] h-[35rem] mt-5 pb-10 flex flex-col  ">
-                            <div className="h-1/5">
-                                <HeaderCards />
-                            </div>
-                            <Carousel>
-                                <CarouselContent>
-                                    {events?.map(createMiniEventCard)}
-                                </CarouselContent>
-                                <CarouselPrevious />
-                                <CarouselNext />
-                            </Carousel>
-                        </div>
+                        
                     </div>
                 </div>
 
             </BaseSection>
             <div className="mt-24 pl-24">
                 <ActivitieHoursContainer />
-                <div className="h-full mt-8">
-                    <MiniEventsTable events={events} user={user!}/>
-                </div>
+                
             </div>
 
         </BaseDashBoardPage>

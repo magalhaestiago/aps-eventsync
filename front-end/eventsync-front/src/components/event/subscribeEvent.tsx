@@ -1,26 +1,30 @@
 import { formatDate } from "date-fns";
 import { SecondaryButton } from "../button";
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
-import { FormEvent, useState } from "react";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "../ui/dialog";
+import { FormEvent, useEffect, useState } from "react";
 import { Check } from "lucide-react";
 import Link from "next/link";
 import { useAuth } from "@/contexts/authContext";
 import { subscribeEvent } from "@/services/event";
+import { EventTypeFromServer } from "@/models/event";
+import { UserType } from "@/models/user";
 
-type SubscribeEventProps = {
-    id: string;
-    title: string
-    description: string;
-    date: Date;
+type ViewEventProps = {
+    event: EventTypeFromServer
 }
-export default function SubscribeEvent({ id, title, description, date }: SubscribeEventProps) {
+
+export default function SubscribeEvent({ event }: ViewEventProps) {
     const { user } = useAuth()
+    const [professorName, setProfessorName] = useState<string | null>(null);
+    
+    
+    
     const [isOpened, setIsOpened] = useState(false)
     const handleSubmit = async (e?: FormEvent<HTMLFormElement>) => {
         e?.preventDefault()
 
         try {
-            const response = await subscribeEvent(id, user?.id!)
+            const response = await subscribeEvent(event.id, user?.id!)
             if (response)
                 setIsOpened(true)
         } catch (error) {
@@ -28,6 +32,7 @@ export default function SubscribeEvent({ id, title, description, date }: Subscri
         }
     }
 
+    //function fazNada(user: UserType){
     return (
         <>
             <Dialog>
@@ -38,15 +43,18 @@ export default function SubscribeEvent({ id, title, description, date }: Subscri
                     <DialogHeader>
                         <DialogTitle
                     className={`font-bold break-all ${
-                            title.length > 30 ? "text-2xl" : "text-3xl"
+                            event.titulo.length > 30 ? "text-2xl" : "text-3xl"
                         } max-w-full text-start`}
                         >
-                        {title}
+                        {event.titulo}
                     </DialogTitle>
-                        <p className="text-fontGray text-sm">{formatDate(date, "dd/MM - HH:mm")}</p>
+                        <p className="text-fontGray text-sm">{formatDate(event.datainicio, "dd/MM - HH:mm")}</p>
                         <DialogDescription>
-                            {description}
+                            {event.descricao}
                         </DialogDescription>
+                        <DialogFooter>
+                        <p className="text-fontGray text-sm">Criado por {event.professor.name}</p>
+                        </DialogFooter> 
                     </DialogHeader>
                     <form onSubmit={handleSubmit} className="w-auto h-[35px] flex justify-end">
                         <DialogClose asChild>
@@ -59,6 +67,8 @@ export default function SubscribeEvent({ id, title, description, date }: Subscri
                                 Confirmar
                             </button>
                         </DialogClose>
+                        
+
                     </form>
                 </DialogContent>
             </Dialog>
@@ -69,11 +79,14 @@ export default function SubscribeEvent({ id, title, description, date }: Subscri
                             onClick={()=>{
                                 window.location.reload()
                             }} className="text-3xl flex items-center justify-center">
+                                
                             Inscrito com sucesso
                         </DialogTitle>
                     </DialogHeader>
                     <DialogDescription className="flex items-center justify-center">
-                        <Link href=""><Check className="w-[50px] h-[50px] text-green-500" /></Link>
+                        <button onClick={()=>{
+                            window.location.reload()
+                        }}><Check className="w-[50px] h-[50px] text-green-500" /></button>
                     </DialogDescription>
                 </DialogContent>
             </Dialog>

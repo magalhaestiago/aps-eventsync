@@ -50,38 +50,51 @@ export default function AdminEvent({ event }: AdminEventProps) {
     return (
         <>
             <Dialog>
-            
+
                 <DialogTrigger>
                     <SecondaryButton message="Gerenciar" />
                 </DialogTrigger>
-                <DialogContent className="max-w-[550px]">
-    <DialogHeader className="flex justify-between flex-row">
-        <div>
-            <DialogTitle className="text-3xl break-all">{event.titulo}</DialogTitle>
-            <p className="text-fontGray text-sm">
-                {formatDate(event.datainicio, "dd/MM - HH:mm")}
-            </p>
-            
-            <DialogDescription className="max-h-[200px] overflow-y-auto text-sm">
-                {event.descricao}
-            </DialogDescription>
+                <DialogContent className="max-w-[650px]">
+                    <DialogHeader className="flex justify-between flex-row">
+                        <div>
+                            <DialogTitle className="text-3xl break-all">{event.titulo}</DialogTitle>
+                            <p className="text-fontGray text-sm">
+                                {formatDate(event.datainicio, "dd/MM - HH:mm")}
+                            </p>
 
-            <DialogFooter> 
-                <p className="text-fontGray text-sm">Criado por {event.professorId}</p>
-                
-            </DialogFooter>
+                            <DialogDescription className="max-h-[200px] overflow-y-auto text-sm">
+                                {event.descricao}
+                            </DialogDescription>
+
+                            <DialogFooter>
+                                <p className="text-fontGray text-sm">Criado por {event.professor.name}</p>
+
+                            </DialogFooter>
                         </div>
-                        
+
                     </DialogHeader>
-                    <form className="w-auto h-[35px] flex justify-end">
-                    <div>
-                            <a
-                                href={`/events/professor/checkin/${event.id}`}
-                                onClick={finishEvent}
-                                className="flex items-center justify-center text-white bg-amber-500 rounded-[40px] w-[160px] h-[35px] mr-6"
-                            >
-                                Ver evento
-                            </a>
+                    <form className="w-auto  flex justify-end">
+                        <div className="flex flex-col gap-5">
+                            <div>
+                                <a
+                                    href={`/events/professor/checkin/cpf/${event.id}`}
+                                    onClick={finishEvent}
+                                    className="flex items-center justify-center text-white bg-amber-500 rounded-[40px] w-[200px] h-[35px] mr-6"
+                                >
+                                    Validar com CPF
+                                </a>
+
+                            </div>
+                            <div>
+                                <a
+                                    href={`/events/professor/checkin/qrcode/${event.id}`}
+                                    onClick={finishEvent}
+                                    className="flex items-center justify-center text-white bg-amber-500 rounded-[40px] w-[200px] h-[35px] mr-6"
+                                >
+                                    Validar com QR Code
+                                </a>
+                            </div>
+
                         </div>
                         <DialogClose asChild>
                             <button
@@ -93,12 +106,12 @@ export default function AdminEvent({ event }: AdminEventProps) {
                         </DialogClose>
                         <DialogClose asChild>
                             <button
-                                onClick={()=>{
+                                onClick={() => {
                                     finishEvent();
                                     window.location.reload();
                                 }}
-                                className="text-white bg-eventSyncSecondary rounded-[40px] w-[160px] h-[35px]"
-                                
+                                className="text-white bg-eventSyncSecondary rounded-[40px] w-[200px] h-[35px]"
+
                             >
                                 Finalizar
                             </button>
@@ -119,11 +132,11 @@ export default function AdminEvent({ event }: AdminEventProps) {
                                 <Check className="w-[50px] h-[50px] text-green-600" />
                             </Link>
                         ) : (
-                            <button onClick={()=> {
+                            <button onClick={() => {
                                 window.location.reload();
                             }}>
                                 <CircleX className="w-[50px] h-[50px] text-red-600" />
-                                </button>
+                            </button>
                         )}
                     </DialogDescription>
                 </DialogContent>

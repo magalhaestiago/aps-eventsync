@@ -105,6 +105,9 @@ class EventService {
         const events = await prisma.event.findMany({
             where:{
                 isValid:true
+            }, include: {
+                professor:true,
+                event_aluno:true
             }
         });
 
@@ -117,7 +120,12 @@ class EventService {
         const event = await prisma.event.findUnique({
             where: {
                 id: id,
-            },
+            }, include: {
+                professor:true,
+                event_aluno:true
+            }
+    
+                
         });
 
         if (!event) {
@@ -195,7 +203,10 @@ class EventService {
         const inscricoes = await prisma.event_aluno.findMany({
             where: {
                 eventId: id,
-            },
+            }, include: {
+                User: true
+
+            }
         });
 
         return inscricoes;
@@ -229,6 +240,10 @@ class EventService {
         if (!event) {
             throw new AppError("Evento não encontrado", 404);
         }
+
+        await prisma.event_aluno.deleteMany({
+            where:{ eventId: id}
+        });
 
         await prisma.event.delete({
             where: {
@@ -265,14 +280,33 @@ class EventService {
 
         subscribedStudents.forEach(async (student) => {
             if (student.subscription_status === "PRESENT") {
+     
+                const certificate = await prisma.certificate.create({
+                    data: {
+                        titulo: event.titulo,
+                        userId: student.userId,
+                        descricao: event.descricao,
+                        horas: event.carga_horaria,
+                        instituicao: event.instituicao,
+                        urlArquivo: '',
+                        datafim: event.datafim,
+                        datainicio: event.datainicio,
+                        isReviewed: true,
+                        isValid: true
+        
+                    },
+                });
+
                 await prisma.atividade_complementar.create({
                     data: {
                         userId: student.userId,
                         eventId: id,
+                        certificateId: certificate.id,
                         horas_aprovadas: event.carga_horaria,
                         participation_type: "ALUNO",
                     },
                 });
+
             }
         });
 

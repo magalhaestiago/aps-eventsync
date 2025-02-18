@@ -61,13 +61,7 @@ export default function LoginHome() {
         fetchCertificates();
     }, []);
 
-    function createMiniEventCard(eventType: EventType) {
-        return (
-            <CarouselItem className="basis-1/8">
-                <MiniEventCards title={eventType.titulo} date={eventType.datainicio} />
-            </CarouselItem>
-        );
-    }
+    
 
     return (
         <BaseDashBoardPage>
@@ -77,13 +71,7 @@ export default function LoginHome() {
                 <div className="mb-5">
                     <h6 className="text-fontGray mb-5">Home</h6>
                 
-                    <Carousel>
-                        <CarouselContent>
-                            {events?.map(createMiniEventCard)}
-                        </CarouselContent>
-                        
-                        <CarouselNext />
-                    </Carousel>
+                    
                     <CertificatesTable certificates={certificates} />
                 </div>
                 

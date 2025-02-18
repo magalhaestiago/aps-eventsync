@@ -14,6 +14,7 @@ class ActivitiesService {
             },
             include: {
                 event: true,
+                Certificate: true
             },
         });
 
@@ -54,6 +55,9 @@ class ActivitiesService {
             },
             where: {
                 userId: id,
+                Certificate: {
+                    isValid: true
+                }
             },
         });
 
